@@ -1,6 +1,6 @@
 # Workshop-Fabrica
-Atividade Prática da Fábrica de Software 2026.2
+Atividade Prática da Fábrica de Software 2026.2 (Análise de Dados/BI)
 
-Exercício do dia 24/08/2026;
+Exercício passado no dia 24/08/2026;
 
-- Modelagem de Dados (Entidade - Relacionamento);
+- Modelagem de Dados (Entidade - Relacionamento).
