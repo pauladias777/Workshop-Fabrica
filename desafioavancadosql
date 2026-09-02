@@ -1,0 +1,50 @@
+-------- PERGUNTA DE NEGÓCIO ----------
+- COMO OS DADOS PODEM SER ANALISADOS PARA IDENTIFICAR INFORMAÇÕES RELEVANTES SOBRE ESPECIALIDADES,
+PACIENTES, CONSULTAS E PAGAMENTOS, AUXILIANDO NA TOMADA DE DECISÕES?
+
+--------SUBQUERY ----------
+
+SELECT * FROM especialidades
+WHERE valor_base = (SELECT MAX(valor_base) FROM especialidades);
+
+-------- CASE WHEN ----------
+
+SELECT * FROM pacientes
+ORDER BY CASE WHEN tipo_sanguineo = 'A+' THEN 1 ELSE 2 END;
+
+
+-------- FUNÇÃO DE JANELA ----------
+
+SELECT 
+  valor_base,
+  RANK () OVER (
+     ORDER BY valor_base DESC
+   ) AS ranking
+FROM especialidades;
+
+
+----------------------------------
+SELECT 
+nome_especialidade,
+valor_base,
+CASE 
+  WHEN valor_base >= 300 THEN 'valor alto'
+  WHEN valor_base >= 250 THEN 'valor médio'
+  ELSE 'valor baixo'
+END AS 'classificacao_valor,
+
+RANK() OVER (
+    ORDER BY valor_base DESC
+) AS ranking
+
+FROM especialidades
+WHERE valor_base >= (
+    SELECT AVG (valor_base)
+    FROM especialidades
+)
+ORDER BY ranking;
+
+-------- SUGESTÃO DE ÍNDICE ----------
+
+CREATE INDEX pagamentos_pendentes
+ON pagamentos (status_pagamento);
